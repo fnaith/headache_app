@@ -16,15 +16,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
   DateTime? pressedDay;
   MedicineDb medicineDb = MedicineDb();
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,66 +26,69 @@ class _HomePageState extends State<HomePage> {
           title: Text(widget.title),
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              CalendarCarousel(
-                daysHaveCircularBorder: null,
-                weekendTextStyle: TextStyle(
-                  color: Colors.black,
-                ),
-                thisMonthDayBorderColor: Colors.grey,
-                height: 420.0,
-                showIconBehindDayText: true,
-                customGridViewPhysics: NeverScrollableScrollPhysics(),
-                markedDateShowIcon: true,
-                markedDateIconMaxShown: 1,
-                todayTextStyle: TextStyle(
-                  color: Colors.white,
-                ),
-                markedDateIconBuilder: (Event event) {
-                  return event.icon ?? Icon(Icons.help_outline);
-                },
-                locale: 'zh',
-                todayButtonColor: Colors.blue,
-                onDayPressed: (date, event) {
-                  pressedDay = date;
-                  print('${date}');
-                  /*medicineDb.save(Medicine(null, '${date}', false));
-                medicineDb.findAllOrderByName().then((items) {
-                  print('${items}');
-                });*/
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => DailyRecordEditor(pressedDay!)));
-                },
-              ),
-              RaisedButton(
-                child: Text('藥物管理'),
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => MedicineManagement()));
-                },
-              ),
-              RaisedButton(
-                child: Text('跳到 B 頁'),
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => BPage()));
-                },
-              )
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _incrementCounter,
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  CalendarCarousel(
+                    daysHaveCircularBorder: null,
+                    weekendTextStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                    thisMonthDayBorderColor: Colors.grey,
+                    height: 420.0,
+                    showIconBehindDayText: true,
+                    customGridViewPhysics: NeverScrollableScrollPhysics(),
+                    markedDateShowIcon: true,
+                    markedDateIconMaxShown: 1,
+                    todayTextStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    markedDateIconBuilder: (Event event) {
+                      return event.icon ?? Icon(Icons.help_outline);
+                    },
+                    locale: 'zh',
+                    todayButtonColor: Colors.blue,
+                    onDayPressed: (date, event) {
+                      pressedDay = date;
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => DailyRecordEditor(pressedDay!)));
+                    },
+                  ),
+                  Row(
+                      children: <Widget>[
+                        RaisedButton(
+                          child: Text('藥物管理'),
+                          onPressed: () {
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => MedicineManagement()));
+                          },
+                        ),
+                        RaisedButton(
+                          child: Text('統計分析'),
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => BPage()));
+                          },
+                        )
+                      ]
+                  ),
+                  Row(
+                      children: <Widget>[
+                        RaisedButton(
+                          child: Text('匯出資料'),
+                          onPressed: () {
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => BPage()));
+                          },
+                        ),
+                        RaisedButton(
+                          child: Text('幫助'),
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => BPage()));
+                          },
+                        )
+                      ]
+                  )
+                ]
+            )
         )
     );
   }

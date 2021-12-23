@@ -14,11 +14,12 @@ class DailyRecord {
   bool sensitiveToLight = false;
   bool sensitiveToSound = false;
   bool headacheLikeBeating = false;
-  bool headacheStartFromSingleSide = false;
+  bool headacheStartFromOneSide = false;
   bool physicalActivityAggravateHeadache = false;
   bool eyeFlashes = false;
   bool partialBlindness = false;
   int headacheHours = 0;
+  int headacheMinutes = 0;
   String medicineUsage = "[]";
   bool hasMenstruation = false;
   bool hasRestlessLegSyndrome = false;
@@ -36,11 +37,12 @@ class DailyRecord {
     sensitiveToLight = map['sensitiveToLight'];
     sensitiveToSound = map['sensitiveToSound'];
     headacheLikeBeating = map['headacheLikeBeating'];
-    headacheStartFromSingleSide = map['headacheStartFromSingleSide'];
+    headacheStartFromOneSide = map['headacheStartFromOneSide'];
     physicalActivityAggravateHeadache = map['physicalActivityAggravateHeadache'];
     eyeFlashes = map['eyeFlashes'];
     partialBlindness = map['partialBlindness'];
     headacheHours = map['headacheHours'];
+    headacheMinutes = map['headacheMinutes'];
     medicineUsage = map['medicineUsage'];
     hasMenstruation = map['hasMenstruation'];
     hasRestlessLegSyndrome = map['hasRestlessLegSyndrome'];
@@ -59,11 +61,12 @@ class DailyRecord {
       'sensitiveToLight': sensitiveToLight,
       'sensitiveToSound': sensitiveToSound,
       'headacheLikeBeating': headacheLikeBeating,
-      'headacheStartFromSingleSide': headacheStartFromSingleSide,
+      'headacheStartFromOneSide': headacheStartFromOneSide,
       'physicalActivityAggravateHeadache': physicalActivityAggravateHeadache,
       'eyeFlashes': eyeFlashes,
       'partialBlindness': partialBlindness,
       'headacheHours': headacheHours,
+      'headacheMinutes': headacheMinutes,
       'medicineUsage': medicineUsage,
       'hasMenstruation': hasMenstruation,
       'hasRestlessLegSyndrome': hasRestlessLegSyndrome

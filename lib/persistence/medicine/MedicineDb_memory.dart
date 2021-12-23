@@ -1,8 +1,13 @@
+import 'package:flutter/foundation.dart';
+import 'package:sqflite/sqflite.dart' as sql;
 import 'package:headache_app/persistence/medicine/Medicine.dart';
 
 class MedicineDb {
-  final Map<int, Map<String, dynamic>> _records = {};
-  int _id = 0;
+  int _id = 2;
+  Map<int, Map<String, dynamic>> _records = {
+    0: Medicine(0, 'aa', false, false).toMap(),
+    1: Medicine(1, 'bb', true, false).toMap()
+  };
   _getId() {
     return _id++;
   }

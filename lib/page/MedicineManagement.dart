@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:headache_app/persistence/medicine/MedicineDb.dart';
 import 'package:headache_app/persistence/medicine/Medicine.dart';
+import 'package:headache_app/component/LabeledCheckbox.dart';
 
 class MedicineManagement extends StatefulWidget {
   @override
@@ -10,9 +11,10 @@ class MedicineManagement extends StatefulWidget {
 class _MedicineManagementState extends State<MedicineManagement> {
   MedicineDb medicineDb = MedicineDb();
 
-  List<Medicine> noteListmain = [];
+  List<Medicine> medicines = [];
 
   TextEditingController titleController = TextEditingController();
+  bool isPainkiller = false;
 
   @override
   void initState() {
@@ -25,6 +27,7 @@ class _MedicineManagementState extends State<MedicineManagement> {
       getAllData();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,49 +39,46 @@ class _MedicineManagementState extends State<MedicineManagement> {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
+                  Text("Title :"),
                   Flexible(
-                      flex: 4,
-                      child: Container(
-                          child: Column(
-                              children: <Widget>[
-                                Text("Title :"),
-                                Flexible(
-                                    child: TextField(
-                                        controller: titleController
-                                    )
-                                ),
-                                RaisedButton(
-                                    child: Text("Add"),
-                                    onPressed : () {
-                                      setState(() {
-                                        insertData();
-                                        FocusScope.of(context).unfocus();
-                                      });
-                                    }
-                                )
-                              ]
-                          )
+                      child: TextField(
+                          controller: titleController,
+                          decoration: InputDecoration(hintText: "請輸入藥名及劑量")
                       )
+                  ),
+                  LabeledCheckbox(
+                      label: '是預防用藥或止痛藥？',
+                      value: isPainkiller,
+                      onChanged: (bool newValue) {
+                        setState(() {
+                          isPainkiller = newValue;
+                        });
+                      }
+                  ),
+                  RaisedButton(
+                      child: Text("新增"),
+                      onPressed : () {
+                        setState(() {
+                          insertData();
+                          FocusScope.of(context).unfocus();
+                        });
+                      }
                   ),
                   Flexible(
                       flex: 9,
                       child: ListView.builder(
-                          itemCount: noteListmain.length,
+                          itemCount: medicines.length,
                           itemBuilder: (BuildContext context, int position) {
                             return InkWell(
                                 child: Card(
                                     color: Colors.white,
                                     elevation: 2.0,
                                     child: ListTile(
-                                        leading: CircleAvatar(
-                                            backgroundColor: Colors.black,
-                                            child: Icon(Icons.assessment)
-                                        ),
-                                        title: Text(this.noteListmain[position].name),
+                                        title: Text(medicines[position].name + (medicines[position].isPainkiller ? ' [預防/止痛藥]' : '')),
                                         trailing: GestureDetector(
                                             child: Icon(Icons.delete, color: Colors.grey),
                                             onTap: () {
-                                              deleteData(this.noteListmain[position].id!);
+                                              deleteData(medicines[position].id!);
                                             }
                                         )
                                     )
@@ -95,16 +95,17 @@ class _MedicineManagementState extends State<MedicineManagement> {
 
   void insertData() async {
     String title = titleController.text;
-    Medicine result = await medicineDb.save(Medicine(null, title, false, false));
+    Medicine result = await medicineDb.save(Medicine(null, title, isPainkiller, false));
     //print('inserted row id: $result.id');
     titleController.text = '';
+    isPainkiller = false;
     refreshDataList();
   }
 
   void getAllData() async {
-    final noteMapList = await medicineDb.findAllNotDeletedOrderByNameAscIdAsc();
+    final medicines = await medicineDb.findAllNotDeletedOrderByNameAscIdAsc();
     setState(() {
-      noteListmain = noteMapList;
+      this.medicines = medicines;
     });
   }
 
