@@ -31,21 +31,21 @@ class DailyRecord {
     afternoonPainScale = map['afternoonPainScale'];
     nightPainScale = map['nightPainScale'];
     sleepingPainScale = map['sleepingPainScale'];
-    haveSeenADoctor = map['haveSeenADoctor'];
-    disgusted = map['disgusted'];
-    vomited = map['vomited'];
-    sensitiveToLight = map['sensitiveToLight'];
-    sensitiveToSound = map['sensitiveToSound'];
-    headacheLikeBeating = map['headacheLikeBeating'];
-    headacheStartFromOneSide = map['headacheStartFromOneSide'];
-    physicalActivityAggravateHeadache = map['physicalActivityAggravateHeadache'];
-    eyeFlashes = map['eyeFlashes'];
-    partialBlindness = map['partialBlindness'];
+    haveSeenADoctor = map['haveSeenADoctor'] != 0;
+    disgusted = map['disgusted'] != 0;
+    vomited = map['vomited'] != 0;
+    sensitiveToLight = map['sensitiveToLight'] != 0;
+    sensitiveToSound = map['sensitiveToSound'] != 0;
+    headacheLikeBeating = map['headacheLikeBeating'] != 0;
+    headacheStartFromOneSide = map['headacheStartFromOneSide'] != 0;
+    physicalActivityAggravateHeadache = map['physicalActivityAggravateHeadache'] != 0;
+    eyeFlashes = map['eyeFlashes'] != 0;
+    partialBlindness = map['partialBlindness'] != 0;
     headacheHours = map['headacheHours'];
     headacheMinutes = map['headacheMinutes'];
     medicineUsage = map['medicineUsage'];
-    hasMenstruation = map['hasMenstruation'];
-    hasRestlessLegSyndrome = map['hasRestlessLegSyndrome'];
+    hasMenstruation = map['hasMenstruation'] != 0;
+    hasRestlessLegSyndrome = map['hasRestlessLegSyndrome'] != 0;
   }
 
   Map<String, dynamic> toMap() {
@@ -55,21 +55,21 @@ class DailyRecord {
       'afternoonPainScale': afternoonPainScale,
       'nightPainScale': nightPainScale,
       'sleepingPainScale': sleepingPainScale,
-      'haveSeenADoctor': haveSeenADoctor,
-      'disgusted': disgusted,
-      'vomited': vomited,
-      'sensitiveToLight': sensitiveToLight,
-      'sensitiveToSound': sensitiveToSound,
-      'headacheLikeBeating': headacheLikeBeating,
-      'headacheStartFromOneSide': headacheStartFromOneSide,
-      'physicalActivityAggravateHeadache': physicalActivityAggravateHeadache,
-      'eyeFlashes': eyeFlashes,
-      'partialBlindness': partialBlindness,
+      'haveSeenADoctor': haveSeenADoctor ? 1 : 0,
+      'disgusted': disgusted ? 1 : 0,
+      'vomited': vomited ? 1 : 0,
+      'sensitiveToLight': sensitiveToLight ? 1 : 0,
+      'sensitiveToSound': sensitiveToSound ? 1 : 0,
+      'headacheLikeBeating': headacheLikeBeating ? 1 : 0,
+      'headacheStartFromOneSide': headacheStartFromOneSide ? 1 : 0,
+      'physicalActivityAggravateHeadache': physicalActivityAggravateHeadache ? 1 : 0,
+      'eyeFlashes': eyeFlashes ? 1 : 0,
+      'partialBlindness': partialBlindness ? 1 : 0,
       'headacheHours': headacheHours,
       'headacheMinutes': headacheMinutes,
       'medicineUsage': medicineUsage,
-      'hasMenstruation': hasMenstruation,
-      'hasRestlessLegSyndrome': hasRestlessLegSyndrome
+      'hasMenstruation': hasMenstruation ? 1 : 0,
+      'hasRestlessLegSyndrome': hasRestlessLegSyndrome ? 1 : 0
     };
   }
 }
