@@ -11,23 +11,20 @@ class PainScaleSelector extends StatelessWidget {
   final String label;
   final int value;
   final ValueChanged<int> onChanged;
-  static final scales = ['不痛', '小痛', '中痛', '大痛'];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: <Widget>[
+        Text('     '),
         Text(label),
-        DropdownButton<int>(
-          value: value,
-          items: List.generate(4, (index) => index, growable: true).map((int value) {
-            return DropdownMenuItem<int>(
-              value: value,
-              child: Text(scales[value]),
-            );
-          }).toList(),
-          onChanged: (int? newValue) {
-            onChanged(newValue!);
+        Slider(
+          value: value.toDouble(),
+          max: 10,
+          divisions: 10,
+          label: value.toString(),
+          onChanged: (double? newValue) {
+            onChanged(newValue!.toInt());
           },
         )
       ]
