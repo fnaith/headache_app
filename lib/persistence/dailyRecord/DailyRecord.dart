@@ -10,6 +10,7 @@ class DailyRecord {
   int sleepingPainScale = 0;
   int headacheHours = 0;
   int headacheMinutes = 0;
+  String headacheRemark = "";
 
   bool disgusted = false;
   bool vomited = false;
@@ -23,14 +24,26 @@ class DailyRecord {
   bool physicalActivityAggravateHeadache = false;
   bool eyeFlashes = false;
   bool partialBlindness = false;
+  bool causeByTemperatureChange = false;
+  bool causeByWindBlow = false;
+  bool causeByMuscleTightness = false;
 
   String medicineUsage = "[]";
 
   int dailyStressScale = 0;
-  bool hasMenstruation = false;
-  bool hasRestlessLegSyndrome = false;
+  bool haveMenstruation = false;
+  bool haveRestlessLegSyndrome = false;
+  String bodyTemperature = "";
   String diastolicBloodPressure = "";
   String systolicBloodPressure = "";
+  bool haveEnoughSleep = false;
+  bool haveEnoughWater = false;
+  bool haveEnoughMeal = false;
+  bool haveEnoughExercise = false;
+  bool haveCoffee = false;
+  bool haveAlcohol = false;
+  bool haveSmoke = false;
+  String dailyActivityRemark = "";
 
   DailyRecord(this.date);
   DailyRecord.fromMap(Map<String, dynamic> map) {
@@ -41,6 +54,7 @@ class DailyRecord {
     sleepingPainScale = map['sleepingPainScale'];
     headacheHours = map['headacheHours'];
     headacheMinutes = map['headacheMinutes'];
+    headacheRemark = map['headacheRemark'];
 
     disgusted = map['disgusted'] != 0;
     vomited = map['vomited'] != 0;
@@ -54,14 +68,26 @@ class DailyRecord {
     physicalActivityAggravateHeadache = map['physicalActivityAggravateHeadache'] != 0;
     eyeFlashes = map['eyeFlashes'] != 0;
     partialBlindness = map['partialBlindness'] != 0;
+    causeByTemperatureChange = map['causeByTemperatureChange'] != 0;
+    causeByWindBlow = map['causeByWindBlow'] != 0;
+    causeByMuscleTightness = map['causeByMuscleTightness'] != 0;
 
     medicineUsage = map['medicineUsage'];
 
     dailyStressScale = map['dailyStressScale'];
-    hasMenstruation = map['hasMenstruation'] != 0;
-    hasRestlessLegSyndrome = map['hasRestlessLegSyndrome'] != 0;
+    haveMenstruation = map['haveMenstruation'] != 0;
+    haveRestlessLegSyndrome = map['haveRestlessLegSyndrome'] != 0;
+    bodyTemperature = map['bodyTemperature'];
     diastolicBloodPressure = map['diastolicBloodPressure'];
     systolicBloodPressure = map['systolicBloodPressure'];
+    haveEnoughSleep = map['haveEnoughSleep'] != 0;
+    haveEnoughWater = map['haveEnoughWater'] != 0;
+    haveEnoughMeal = map['haveEnoughMeal'] != 0;
+    haveEnoughExercise = map['haveEnoughExercise'] != 0;
+    haveCoffee = map['haveCoffee'] != 0;
+    haveAlcohol = map['haveAlcohol'] != 0;
+    haveSmoke = map['haveSmoke'] != 0;
+    dailyActivityRemark = map['dailyActivityRemark'];
   }
 
   Map<String, dynamic> toMap() {
@@ -73,6 +99,7 @@ class DailyRecord {
       'sleepingPainScale': sleepingPainScale,
       'headacheHours': headacheHours,
       'headacheMinutes': headacheMinutes,
+      'headacheRemark': headacheRemark,
 
       'dailyStressScale': dailyStressScale,
       'disgusted': disgusted ? 1 : 0,
@@ -87,14 +114,26 @@ class DailyRecord {
       'physicalActivityAggravateHeadache': physicalActivityAggravateHeadache ? 1 : 0,
       'eyeFlashes': eyeFlashes ? 1 : 0,
       'partialBlindness': partialBlindness ? 1 : 0,
+      'causeByTemperatureChange': causeByTemperatureChange ? 1 : 0,
+      'causeByWindBlow': causeByWindBlow ? 1 : 0,
+      'causeByMuscleTightness': causeByMuscleTightness ? 1 : 0,
 
       'medicineUsage': medicineUsage,
 
       'dailyStressScale': dailyStressScale,
-      'hasMenstruation': hasMenstruation ? 1 : 0,
-      'hasRestlessLegSyndrome': hasRestlessLegSyndrome ? 1 : 0,
+      'haveMenstruation': haveMenstruation ? 1 : 0,
+      'haveRestlessLegSyndrome': haveRestlessLegSyndrome ? 1 : 0,
+      'bodyTemperature': bodyTemperature,
       'diastolicBloodPressure': diastolicBloodPressure,
-      'systolicBloodPressure': systolicBloodPressure
+      'systolicBloodPressure': systolicBloodPressure,
+      'haveEnoughSleep': haveEnoughSleep ? 1 : 0,
+      'haveEnoughWater': haveEnoughWater ? 1 : 0,
+      'haveEnoughMeal': haveEnoughMeal ? 1 : 0,
+      'haveEnoughExercise': haveEnoughExercise ? 1 : 0,
+      'haveCoffee': haveCoffee ? 1 : 0,
+      'haveAlcohol': haveAlcohol ? 1 : 0,
+      'haveSmoke': haveSmoke ? 1 : 0,
+      'dailyActivityRemark': dailyActivityRemark
     };
   }
 }

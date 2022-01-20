@@ -124,6 +124,21 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                         ),
                         Text('分')
                       ]
+                    ),
+                    Row(
+                      children: <Widget>[
+                        const Text('頭痛備註'),
+                        Flexible(
+                          child: TextFormField(
+                            initialValue: _dailyRecord.headacheRemark,
+                            onChanged: (text) {
+                              setState(() {
+                                _dailyRecord.headacheRemark = text;
+                              });
+                            }
+                          )
+                        )
+                      ]
                     )
                   ]
                 )
@@ -241,6 +256,34 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                         _dailyRecord.partialBlindness = newValue;
                       });
                     }
+                  ),
+                  ListTile(title: Text('頭痛的可能成因？')),
+                  LabeledCheckbox(
+                    label: '可能由氣溫變化引起？',
+                    value: _dailyRecord.causeByTemperatureChange,
+                    onChanged: (bool newValue) {
+                      setState(() {
+                        _dailyRecord.causeByTemperatureChange = newValue;
+                      });
+                    }
+                  ),
+                  LabeledCheckbox(
+                    label: '可能由風吹引起？',
+                    value: _dailyRecord.causeByWindBlow,
+                    onChanged: (bool newValue) {
+                      setState(() {
+                        _dailyRecord.causeByWindBlow = newValue;
+                      });
+                    }
+                  ),
+                  LabeledCheckbox(
+                    label: '可能由肌肉緊繃引起？',
+                    value: _dailyRecord.causeByMuscleTightness,
+                    onChanged: (bool newValue) {
+                      setState(() {
+                        _dailyRecord.causeByMuscleTightness = newValue;
+                      });
+                    }
                   )
                 ]
             ),
@@ -258,76 +301,174 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                 ]
             ),
             ExpansionTile(
-                title: const Text('日常活動記錄'),
-                children: <Widget>[
-                  PainScaleSelector(
-                    label: '壓力程度',
-                    value: _dailyRecord.dailyStressScale,
-                    onChanged: (int newValue) {
-                      setState(() {
-                        _dailyRecord.dailyStressScale = newValue;
-                      });
-                    }
-                  ),
-                  LabeledCheckbox(
-                    label: '是否有月經？',
-                    value: _dailyRecord.hasMenstruation,
-                    onChanged: (bool newValue) {
-                      setState(() {
-                        _dailyRecord.hasMenstruation = newValue;
-                      });
-                    }
-                  ),
-                  LabeledCheckbox(
-                    label: '是否有不寧腿？',
-                    value: _dailyRecord.hasRestlessLegSyndrome,
-                    onChanged: (bool newValue) {
-                      setState(() {
-                        _dailyRecord.hasRestlessLegSyndrome = newValue;
-                      });
-                    }
-                  ),
-                  Row(
-                    children: <Widget>[
-                      const Text('舒張壓'),
-                      Flexible(
-                        child: TextFormField(
-                          initialValue: _dailyRecord.diastolicBloodPressure,
-                          keyboardType: const TextInputType.numberWithOptions(),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp(r'^\d{0,3}')),
-                          ],
-                          onChanged: (text) {
-                            setState(() {
-                              _dailyRecord.diastolicBloodPressure = text;
-                            });
-                          }
-                        )
-                      ),
-                      const Text('mmHg')
-                    ]
-                  ),
-                  Row(
-                    children: <Widget>[
-                      const Text('收縮壓'),
-                      Flexible(
-                        child: TextFormField(
-                          initialValue: _dailyRecord.systolicBloodPressure,
-                          keyboardType: const TextInputType.numberWithOptions(),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp(r'^\d{0,3}')),
-                          ],
-                          onChanged: (text) {
-                            setState(() {
-                              _dailyRecord.systolicBloodPressure = text;
-                            });
-                          }
-                        )
-                      ),
-                      const Text('mmHg')
-                    ]
-                  )
-                ]
+              title: const Text('日常活動記錄'),
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    const Text('日常活動備註'),
+                    Flexible(
+                      child: TextFormField(
+                        initialValue: _dailyRecord.dailyActivityRemark,
+                        onChanged: (text) {
+                          setState(() {
+                            _dailyRecord.dailyActivityRemark = text;
+                          });
+                        }
+                      )
+                    )
+                  ]
+                ),
+                PainScaleSelector(
+                  label: '壓力程度',
+                  value: _dailyRecord.dailyStressScale,
+                  onChanged: (int newValue) {
+                    setState(() {
+                      _dailyRecord.dailyStressScale = newValue;
+                    });
+                  }
+                ),
+                LabeledCheckbox(
+                  label: '是否有月經？',
+                  value: _dailyRecord.haveMenstruation,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      _dailyRecord.haveMenstruation = newValue;
+                    });
+                  }
+                ),
+                LabeledCheckbox(
+                  label: '是否有不寧腿？',
+                  value: _dailyRecord.haveRestlessLegSyndrome,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      _dailyRecord.haveRestlessLegSyndrome = newValue;
+                    });
+                  }
+                ),
+                Row(
+                  children: <Widget>[
+                    const Text('體溫'),
+                    Flexible(
+                      child: TextFormField(
+                        initialValue: _dailyRecord.bodyTemperature,
+                        keyboardType: const TextInputType.numberWithOptions(),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'^\d{0,2}(\.\d{0,1})?')),
+                        ],
+                        onChanged: (text) {
+                          setState(() {
+                            _dailyRecord.bodyTemperature = text;
+                          });
+                        }
+                      )
+                    ),
+                    const Text('mmHg')
+                  ]
+                ),
+                Row(
+                  children: <Widget>[
+                    const Text('舒張壓'),
+                    Flexible(
+                      child: TextFormField(
+                        initialValue: _dailyRecord.diastolicBloodPressure,
+                        keyboardType: const TextInputType.numberWithOptions(),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'^\d{0,3}')),
+                        ],
+                        onChanged: (text) {
+                          setState(() {
+                            _dailyRecord.diastolicBloodPressure = text;
+                          });
+                        }
+                      )
+                    ),
+                    const Text('mmHg')
+                  ]
+                ),
+                Row(
+                  children: <Widget>[
+                    const Text('收縮壓'),
+                    Flexible(
+                      child: TextFormField(
+                        initialValue: _dailyRecord.systolicBloodPressure,
+                        keyboardType: const TextInputType.numberWithOptions(),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'^\d{0,3}')),
+                        ],
+                        onChanged: (text) {
+                          setState(() {
+                            _dailyRecord.systolicBloodPressure = text;
+                          });
+                        }
+                      )
+                    ),
+                    const Text('mmHg')
+                  ]
+                ),
+                LabeledCheckbox(
+                  label: '是否充分睡眠？',
+                  value: _dailyRecord.haveEnoughSleep,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      _dailyRecord.haveEnoughSleep = newValue;
+                    });
+                  }
+                ),
+                LabeledCheckbox(
+                  label: '是否充分飲水？',
+                  value: _dailyRecord.haveEnoughWater,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      _dailyRecord.haveEnoughWater = newValue;
+                    });
+                  }
+                ),
+                LabeledCheckbox(
+                  label: '是否三餐正常？',
+                  value: _dailyRecord.haveEnoughMeal,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      _dailyRecord.haveEnoughMeal = newValue;
+                    });
+                  }
+                ),
+                LabeledCheckbox(
+                  label: '是否充分運動？',
+                  value: _dailyRecord.haveEnoughExercise,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      _dailyRecord.haveEnoughExercise = newValue;
+                    });
+                  }
+                ),
+                LabeledCheckbox(
+                  label: '是否喝咖啡？',
+                  value: _dailyRecord.haveCoffee,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      _dailyRecord.haveCoffee = newValue;
+                    });
+                  }
+                ),
+                LabeledCheckbox(
+                  label: '是否喝酒？',
+                  value: _dailyRecord.haveAlcohol,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      _dailyRecord.haveAlcohol = newValue;
+                    });
+                  }
+                ),
+                LabeledCheckbox(
+                  label: '是否抽菸？',
+                  value: _dailyRecord.haveSmoke,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      _dailyRecord.haveSmoke = newValue;
+                    });
+                  }
+                )
+              ]
             ),
             Row(
               children: <Widget>[
