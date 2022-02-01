@@ -16,4 +16,11 @@ class DailyRecordDb {
     }
     return Future<DailyRecord?>.value(DailyRecord.fromMap(record));
   }
+
+  Future<List<DailyRecord>> findAll() async {
+    final List<DailyRecord> dailyRecords = _records.values
+        .map((record) => DailyRecord.fromMap(record))
+        .toList();
+    return Future<List<DailyRecord>>.value(dailyRecords);
+  }
 }

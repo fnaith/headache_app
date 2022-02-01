@@ -37,6 +37,9 @@ dependencies:
   flutter_calendar_carousel: ^2.1.0
   drift: ^1.1.0
   sqflite: ^2.0.1
+  path_provider: ^2.0.8
+  share_plus: ^3.0.4
+  file_picker: ^4.3.3
 
 dev_dependencies:
   flutter_test:

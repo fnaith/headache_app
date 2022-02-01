@@ -39,11 +39,11 @@ class _MedicineManagementState extends State<MedicineManagement> {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text("Title :"),
+                  const Text("Title :"),
                   Flexible(
                       child: TextField(
                           controller: titleController,
-                          decoration: InputDecoration(hintText: "請輸入藥名及劑量")
+                          decoration: const InputDecoration(hintText: "請輸入藥名及劑量")
                       )
                   ),
                   LabeledCheckbox(
@@ -55,7 +55,7 @@ class _MedicineManagementState extends State<MedicineManagement> {
                         });
                       }
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                       child: Text("新增"),
                       onPressed : () {
                         setState(() {

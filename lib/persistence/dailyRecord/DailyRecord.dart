@@ -1,6 +1,6 @@
 class DailyRecord {
   static int getDate(DateTime dateTime) {
-    return dateTime.year * 1000 + dateTime.month * 10 + dateTime.day;
+    return dateTime.year * 10000 + dateTime.month * 100 + dateTime.day;
   }
 
   int date = -1;
