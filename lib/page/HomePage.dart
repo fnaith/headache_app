@@ -3,6 +3,7 @@ import 'package:headache_app/page/MedicineManagement.dart';
 import 'package:headache_app/page/DailyRecordEditor.dart';
 import 'package:headache_app/page/BPage.dart';
 import 'package:headache_app/page/BackupAndRestorePage.dart';
+import 'package:headache_app/persistence/dailyRecord/DailyRecord.dart';
 import 'package:headache_app/persistence/dailyRecord/DailyRecordDb.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
 
@@ -17,8 +18,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final DailyRecordDb _dailyRecordDb = DailyRecordDb();
+  final TextStyle noDataTextStyle = const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: Colors.white
+  );
+  final TextStyle hasDataTextStyle = const TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w700,
+      color: Color.fromARGB(255, 28, 148, 247)
+  );
+  final TextStyle toDayTextStyle = const TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w700,
+      color: Colors.black
+  );
   final Set<int> _existDates = {};
   DateTime? pressedDay;
+
+  _HomePageState() {
+    loadData();
+  }
+
+  void loadData() async {
+    final List<DailyRecord> dailyRecords = await _dailyRecordDb.findAll();
+    for (var dailyRecord in dailyRecords) {
+      _existDates.add(dailyRecord.date);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +53,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: const Color.fromARGB(255, 228, 228, 228),
       appBar: AppBar(
         title: Text(widget.title),
+        centerTitle: true
       ),
       body: Center(
         child: Column(
@@ -41,33 +69,10 @@ class _HomePageState extends State<HomePage> {
               ),
               daysHaveCircularBorder: true,
               dayButtonColor: const Color(0xFF97CBFF),
+              prevMonthDayBorderColor: Colors.grey,
+              nextMonthDayBorderColor: Colors.grey,
               weekdayTextStyle: const TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: Colors.black
-              ),
-              daysTextStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: Colors.white
-              ),
-              weekendTextStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: Colors.white
-              ),
-              inactiveDaysTextStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: Colors.grey
-              ),
-              inactiveWeekendTextStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: Colors.grey
-              ),
-              todayTextStyle: const TextStyle(
-                fontSize: 18,
                 fontWeight: FontWeight.w700,
                 color: Colors.black
               ),
@@ -79,16 +84,10 @@ class _HomePageState extends State<HomePage> {
               markedDateShowIcon: true,
               onDayPressed: (date, event) {
                 pressedDay = date;
-                Navigator.push(context, MaterialPageRoute(builder: (context) => DailyRecordEditor(dateTime: pressedDay!)));
-              },
-              onCalendarChanged: (day) async {
-                _existDates.clear();
-                for (var i = 0; i < 31; ++i) {
-                  final date = day.year * 10000 + day.month * 100 + (i + 1);
-                  if (null != await _dailyRecordDb.findOneByDate(date)) {
-                    _existDates.add(date);
-                  }
-                }
+                print(event);
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                    DailyRecordEditor(dateTime: pressedDay!, onSave: (date) { _existDates.add(date); },
+                        onSaveDone: () { setState(() {}); })));
               },
               customDayBuilder: (
                   bool isSelectable,
@@ -102,20 +101,12 @@ class _HomePageState extends State<HomePage> {
                   DateTime day,
                   ) {
                 final date = day.year * 10000 + day.month * 100 + day.day;
-                if (_existDates.contains(date)) {
-                  return Center(
-                    child: Text(
-                      day.day.toString(),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: Color.fromARGB(255, 28, 148, 247)
-                      )
-                    ),
-                  );
-                } else {
-                  return null;
-                }
+                return Center(
+                  child: Text(
+                    day.day.toString(),
+                    style: isToday ? toDayTextStyle : (_existDates.contains(date) ? hasDataTextStyle : noDataTextStyle)
+                  ),
+                );
               },
             ),
             Row(
@@ -144,7 +135,8 @@ class _HomePageState extends State<HomePage> {
                   child: const Text('備份還原'),
                   onPressed: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => BackupAndRestorePage()));
+                      context, MaterialPageRoute(builder: (context) =>
+                        BackupAndRestorePage(onSave: (date) { _existDates.add(date); }, onSaveDone: () { setState(() {}); })));
                   },
                 ),
                 const SizedBox(width: 12),

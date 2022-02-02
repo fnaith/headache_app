@@ -10,7 +10,14 @@ import 'package:headache_app/persistence/dailyRecord/DailyRecordDb.dart';
 import 'package:headache_app/persistence/dailyRecord/DailyRecord.dart';
 
 class BackupAndRestorePage extends StatelessWidget {
-  const BackupAndRestorePage({Key? key}) : super(key: key);
+  final ValueChanged<int> onSave;
+  final VoidCallback onSaveDone;
+
+  const BackupAndRestorePage({
+    Key? key,
+    required this.onSave,
+    required this.onSaveDone
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +25,17 @@ class BackupAndRestorePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('備份還原'),
       ),
-      body: _BackupAndRestorePage(),
+      body: _BackupAndRestorePage(onSave, onSaveDone),
     );
   }
 }
 
 class _BackupAndRestorePage extends StatelessWidget {
   final DailyRecordDb _dailyRecordDb = DailyRecordDb();
+  final ValueChanged<int> onSave;
+  final VoidCallback onSaveDone;
+
+  _BackupAndRestorePage(this.onSave, this.onSaveDone);
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +64,10 @@ class _BackupAndRestorePage extends StatelessWidget {
                     final isNewDailyRecord = null == await _dailyRecordDb.findOneByDate(map['date']);
                     if (isNewDailyRecord) {
                       await _dailyRecordDb.save(DailyRecord.fromMap(map));
+                      onSave(map['date']);
                     }
                   }
+                  onSaveDone();
                   // log('>>>${(await _dailyRecordDb.findAll()).length}');
                 }
               }

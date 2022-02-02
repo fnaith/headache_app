@@ -9,22 +9,28 @@ import 'package:headache_app/component/MedicineUsageEditor.dart';
 
 class DailyRecordEditor extends StatefulWidget {
   final DateTime dateTime;
+  final ValueChanged<int> onSave;
+  final VoidCallback onSaveDone;
 
   const DailyRecordEditor({
     Key? key,
     required this.dateTime,
+    required this.onSave,
+    required this.onSaveDone
   }) : super(key: key);
 
   @override
-  _DailyRecordEditorState createState() => _DailyRecordEditorState(dateTime);
+  _DailyRecordEditorState createState() => _DailyRecordEditorState(dateTime, onSave, onSaveDone);
 }
 
 class _DailyRecordEditorState extends State<DailyRecordEditor> {
   final DailyRecordDb _dailyRecordDb = DailyRecordDb();
   final DateTime _dateTime;
+  final ValueChanged<int> onSave;
+  final VoidCallback onSaveDone;
   late DailyRecord _dailyRecord;
 
-  _DailyRecordEditorState(this._dateTime) {
+  _DailyRecordEditorState(this._dateTime, this.onSave, this.onSaveDone) {
     final date = DailyRecord.getDate(_dateTime);
     _dailyRecord = DailyRecord(date);
   }
@@ -479,6 +485,8 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                   child: const Text('確定'),
                   onPressed: () {
                     _dailyRecordDb.save(_dailyRecord);
+                    onSave(_dailyRecord.date);
+                    onSaveDone();
                   }
                 ),
                 ElevatedButton(
