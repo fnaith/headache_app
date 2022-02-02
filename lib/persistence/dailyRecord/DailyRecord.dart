@@ -101,7 +101,6 @@ class DailyRecord {
       'headacheMinutes': headacheMinutes,
       'headacheRemark': headacheRemark,
 
-      'dailyStressScale': dailyStressScale,
       'disgusted': disgusted ? 1 : 0,
       'vomited': vomited ? 1 : 0,
       'dizzy': dizzy ? 1 : 0,

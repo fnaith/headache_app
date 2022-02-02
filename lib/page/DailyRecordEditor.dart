@@ -8,17 +8,20 @@ import 'package:headache_app/component/PainScaleSelector.dart';
 import 'package:headache_app/component/MedicineUsageEditor.dart';
 
 class DailyRecordEditor extends StatefulWidget {
-  DateTime dateTime;
+  final DateTime dateTime;
 
-  DailyRecordEditor(this.dateTime);
+  const DailyRecordEditor({
+    Key? key,
+    required this.dateTime,
+  }) : super(key: key);
 
   @override
   _DailyRecordEditorState createState() => _DailyRecordEditorState(dateTime);
 }
 
 class _DailyRecordEditorState extends State<DailyRecordEditor> {
-  DailyRecordDb _dailyRecordDb = DailyRecordDb();
-  DateTime _dateTime;
+  final DailyRecordDb _dailyRecordDb = DailyRecordDb();
+  final DateTime _dateTime;
   late DailyRecord _dailyRecord;
 
   _DailyRecordEditorState(this._dateTime) {
@@ -92,7 +95,7 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                     ),
                     Row(
                       children: <Widget>[
-                        Text('當日頭痛幾小時？'),
+                        const Text('當日頭痛幾小時？'),
                         DropdownButton<int>(
                           value: _dailyRecord.headacheHours,
                           items: List.generate(24, (index) => index, growable: true).map((int value) {
@@ -107,7 +110,7 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                             });
                           },
                         ),
-                        Text('小時'),
+                        const Text('小時'),
                         DropdownButton<int>(
                           value: _dailyRecord.headacheMinutes,
                           items: List.generate(13, (index) => index * 5, growable: true).map((int value) {
@@ -122,7 +125,7 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                             });
                           },
                         ),
-                        Text('分')
+                        const Text('分')
                       ]
                     ),
                     Row(
@@ -238,7 +241,7 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                       });
                     }
                   ),
-                  ListTile(title: Text('頭痛前會有何預兆出現嗎？')),
+                  const ListTile(title: Text('頭痛前會有何預兆出現嗎？')),
                   LabeledCheckbox(
                     label: '眼前出現閃光？',
                     value: _dailyRecord.eyeFlashes,
@@ -257,7 +260,7 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                       });
                     }
                   ),
-                  ListTile(title: Text('頭痛的可能成因？')),
+                  const ListTile(title: Text('頭痛的可能成因？')),
                   LabeledCheckbox(
                     label: '可能由氣溫變化引起？',
                     value: _dailyRecord.causeByTemperatureChange,
@@ -472,14 +475,14 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
             ),
             Row(
               children: <Widget>[
-                RaisedButton(
-                  child: Text('確定'),
+                ElevatedButton(
+                  child: const Text('確定'),
                   onPressed: () {
                     _dailyRecordDb.save(_dailyRecord);
                   }
                 ),
-                RaisedButton(
-                  child: Text('取消'),
+                ElevatedButton(
+                  child: const Text('取消'),
                   onPressed: () {
                     Navigator.pop(context);
                   }

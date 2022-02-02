@@ -3,7 +3,7 @@ import 'package:headache_app/page/MedicineManagement.dart';
 import 'package:headache_app/page/DailyRecordEditor.dart';
 import 'package:headache_app/page/BPage.dart';
 import 'package:headache_app/page/BackupAndRestorePage.dart';
-import 'package:headache_app/persistence/medicine/MedicineDb.dart';
+import 'package:headache_app/persistence/dailyRecord/DailyRecordDb.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
 
 class HomePage extends StatefulWidget {
@@ -16,8 +16,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final DailyRecordDb _dailyRecordDb = DailyRecordDb();
+  final Set<int> _existDates = {};
   DateTime? pressedDay;
-  MedicineDb medicineDb = MedicineDb();
 
   @override
   Widget build(BuildContext context) {
@@ -78,10 +79,16 @@ class _HomePageState extends State<HomePage> {
               markedDateShowIcon: true,
               onDayPressed: (date, event) {
                 pressedDay = date;
-                Navigator.push(context, MaterialPageRoute(builder: (context) => DailyRecordEditor(pressedDay!)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DailyRecordEditor(dateTime: pressedDay!)));
               },
-              onCalendarChanged: (date) {
-                //log(date.toString());
+              onCalendarChanged: (day) async {
+                _existDates.clear();
+                for (var i = 0; i < 31; ++i) {
+                  final date = day.year * 10000 + day.month * 100 + (i + 1);
+                  if (null != await _dailyRecordDb.findOneByDate(date)) {
+                    _existDates.add(date);
+                  }
+                }
               },
               customDayBuilder: (
                   bool isSelectable,
@@ -94,7 +101,8 @@ class _HomePageState extends State<HomePage> {
                   bool isThisMonthDay,
                   DateTime day,
                   ) {
-                if (day.day == 15) {
+                final date = day.year * 10000 + day.month * 100 + day.day;
+                if (_existDates.contains(date)) {
                   return Center(
                     child: Text(
                       day.day.toString(),

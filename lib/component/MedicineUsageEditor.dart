@@ -10,9 +10,10 @@ class MedicineUsageEditor extends StatefulWidget {
   final ValueChanged<String> onChanged;
 
   const MedicineUsageEditor({
+    Key? key,
     required this.value,
     required this.onChanged,
-  });
+  }): super(key: key);
 
   @override
   _MedicineUsageEditorState createState() => _MedicineUsageEditorState(

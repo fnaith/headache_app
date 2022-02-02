@@ -1,11 +1,13 @@
 import 'package:headache_app/persistence/medicine/Medicine.dart';
 
 class MedicineDb {
-  int _id = 2;
+  int _id = 4;
 
-  Map<int, Map<String, dynamic>> _records = {
-    0: Medicine(0, 'aa', false, false).toMap(),
-    1: Medicine(1, 'bb', true, false).toMap()
+  final Map<int, Map<String, dynamic>> _records = {
+    0: Medicine(0, '舒腦 Suzin 5 mg', false, false).toMap(),
+    1: Medicine(1, '英明格 Imigran 50 mg', true, false).toMap(),
+    2: Medicine(2, '中藥', false, false).toMap(),
+    3: Medicine(3, '心康樂 Cardolol 40 mg', false, false).toMap()
   };
 
   _getId() {

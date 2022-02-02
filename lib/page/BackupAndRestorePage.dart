@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -10,6 +10,8 @@ import 'package:headache_app/persistence/dailyRecord/DailyRecordDb.dart';
 import 'package:headache_app/persistence/dailyRecord/DailyRecord.dart';
 
 class BackupAndRestorePage extends StatelessWidget {
+  const BackupAndRestorePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +24,7 @@ class BackupAndRestorePage extends StatelessWidget {
 }
 
 class _BackupAndRestorePage extends StatelessWidget {
-  DailyRecordDb _dailyRecordDb = DailyRecordDb();
+  final DailyRecordDb _dailyRecordDb = DailyRecordDb();
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class _BackupAndRestorePage extends StatelessWidget {
           ElevatedButton(
             child: const Text('匯入檔案'),
             onPressed: () async {
+              await FilePicker.platform.clearTemporaryFiles();
               final FilePickerResult? result = await FilePicker.platform.pickFiles(
                 type: FileType.custom,
                 allowedExtensions: ['txt'],
@@ -42,10 +45,17 @@ class _BackupAndRestorePage extends StatelessWidget {
               if (null != result) {
                 final PlatformFile file = result.files.first;
                 if (null != file.bytes) {
-                  final json = const Utf8Decoder().convert(file.bytes!);
-                  log('${file.name}');
-                  log('${file.size}');
-                  log(":"+json);
+                  final String json = utf8.decode(file.bytes!);
+                  final mapList = jsonDecode(json) as List<dynamic>;
+                  // log('>>>${(await _dailyRecordDb.findAll()).length}');
+                  for (var i = 0 ; i < mapList.length; ++i) {
+                    final dynamic map = mapList[i];
+                    final isNewDailyRecord = null == await _dailyRecordDb.findOneByDate(map['date']);
+                    if (isNewDailyRecord) {
+                      await _dailyRecordDb.save(DailyRecord.fromMap(map));
+                    }
+                  }
+                  // log('>>>${(await _dailyRecordDb.findAll()).length}');
                 }
               }
             },
@@ -56,12 +66,13 @@ class _BackupAndRestorePage extends StatelessWidget {
               final List<DailyRecord> dailyRecords = await _dailyRecordDb.findAll();
               final String json = jsonEncode(dailyRecords.map((dailyRecord) => dailyRecord.toMap()).toList());
               final file = await writeText(json);
-              return Share.shareFiles([file.path], text: 'Headache App Backup Export');
+              return Share.shareFiles([file.path], subject: 'Headache App Backup Export', text: 'Export Date : ${DateTime.now()}');
             },
           ),
           ElevatedButton(
             child: const Text('返回首頁'),
             onPressed: () {
+              Navigator.pop(context);
             },
           )
         ],

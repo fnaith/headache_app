@@ -16,7 +16,7 @@ class PainScaleSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Text('     '),
+        const Text('     '),
         Text(label),
         Slider(
           value: value.toDouble(),
