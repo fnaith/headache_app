@@ -66,7 +66,7 @@ def list_to_daily_record(id, column):
   daily_record['haveEnoughSleep'] = 0
   daily_record['haveEnoughWater'] = 0
   daily_record['haveEnoughMeal'] = 0
-  daily_record['haveEnoughExercise'] = 0
+  daily_record['haveExercise'] = 0
   daily_record['haveCoffee'] = 0
   daily_record['haveAlcohol'] = 0
   daily_record['haveSmoke'] = 0

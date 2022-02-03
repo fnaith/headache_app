@@ -52,6 +52,7 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 238, 230, 234),
       appBar: AppBar(
         title: Text(DateFormat('yyyy年MM月dd日').format(_dateTime)),
       ),
@@ -156,7 +157,7 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
             ExpansionTile(
                 title: const Text('可能伴隨症狀及預兆'),
                 children: <Widget>[
-                  ListTile(title: Text('是否伴隨下列症狀：')),
+                  const ListTile(title: Text('是否伴隨下列症狀：')),
                   LabeledCheckbox(
                     label: '有噁心的感覺嗎？',
                     value: _dailyRecord.disgusted,
@@ -371,7 +372,7 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                         }
                       )
                     ),
-                    const Text('mmHg')
+                    const Text('°C')
                   ]
                 ),
                 Row(
@@ -442,11 +443,11 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                   }
                 ),
                 LabeledCheckbox(
-                  label: '是否充分運動？',
-                  value: _dailyRecord.haveEnoughExercise,
+                  label: '是否有運動？',
+                  value: _dailyRecord.haveExercise,
                   onChanged: (bool newValue) {
                     setState(() {
-                      _dailyRecord.haveEnoughExercise = newValue;
+                      _dailyRecord.haveExercise = newValue;
                     });
                   }
                 ),

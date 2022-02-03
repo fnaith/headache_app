@@ -10,6 +10,7 @@ class AnalysisPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 238, 230, 234),
       appBar: AppBar(
         title: const Text('統計分析'),
         centerTitle: true

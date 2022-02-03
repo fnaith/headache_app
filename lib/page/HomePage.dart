@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:headache_app/page/MedicineManagement.dart';
 import 'package:headache_app/page/DailyRecordEditor.dart';
-import 'package:headache_app/page/BPage.dart';
+import 'package:headache_app/page/HelpPage.dart';
 import 'package:headache_app/page/BackupAndRestorePage.dart';
 import 'package:headache_app/page/AnalysisPage.dart';
 import 'package:headache_app/persistence/dailyRecord/DailyRecord.dart';
@@ -25,14 +25,14 @@ class _HomePageState extends State<HomePage> {
     color: Colors.white
   );
   final TextStyle hasDataTextStyle = const TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w700,
-      color: Color.fromARGB(255, 28, 148, 247)
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: Color.fromARGB(255, 101, 115, 154)
   );
   final TextStyle toDayTextStyle = const TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w700,
-      color: Colors.black
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: Colors.black
   );
   final Set<int> _existDates = {};
   DateTime? pressedDay;
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 228, 228, 228),
+      backgroundColor: const Color.fromARGB(255, 238, 230, 234),
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
               headerTextStyle: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w700,
-                color: Colors.orange
+                color: Color.fromARGB(255, 255, 190, 201)
               ),
               daysHaveCircularBorder: true,
               dayButtonColor: const Color(0xFF97CBFF),
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
               weekdayTextStyle: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
-                color: Colors.black
+                color: Color.fromARGB(255, 101, 115, 154)
               ),
               todayButtonColor: const Color.fromARGB(255, 198, 222, 252),
               todayBorderColor: Colors.white,
@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                 ElevatedButton(
                   child: const Text('幫助訊息'),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const BPage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const HelpPage()));
                   },
                 )
               ]

@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '頭痛醫療日記',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blue
       ),
       home: const HomePage(title: '頭痛醫療日記'),
       localizationsDelegates: const [

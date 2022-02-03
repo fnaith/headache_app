@@ -34,20 +34,20 @@ class DailyRecord {
 
   String medicineUsage = "[]";
 
+  String dailyActivityRemark = "";
   int dailyStressScale = 0;
   bool haveMenstruation = false;
   bool haveRestlessLegSyndrome = false;
   String bodyTemperature = "";
   String diastolicBloodPressure = "";
   String systolicBloodPressure = "";
-  bool haveEnoughSleep = false;
-  bool haveEnoughWater = false;
-  bool haveEnoughMeal = false;
-  bool haveEnoughExercise = false;
+  bool haveEnoughSleep = true;
+  bool haveEnoughWater = true;
+  bool haveEnoughMeal = true;
+  bool haveExercise = false;
   bool haveCoffee = false;
   bool haveAlcohol = false;
   bool haveSmoke = false;
-  String dailyActivityRemark = "";
 
   DailyRecord(this.date);
   DailyRecord.fromMap(Map<String, dynamic> map) {
@@ -78,6 +78,7 @@ class DailyRecord {
 
     medicineUsage = map['medicineUsage'];
 
+    dailyActivityRemark = map['dailyActivityRemark'];
     dailyStressScale = map['dailyStressScale'];
     haveMenstruation = map['haveMenstruation'] != 0;
     haveRestlessLegSyndrome = map['haveRestlessLegSyndrome'] != 0;
@@ -87,11 +88,10 @@ class DailyRecord {
     haveEnoughSleep = map['haveEnoughSleep'] != 0;
     haveEnoughWater = map['haveEnoughWater'] != 0;
     haveEnoughMeal = map['haveEnoughMeal'] != 0;
-    haveEnoughExercise = map['haveEnoughExercise'] != 0;
+    haveExercise = map['haveExercise'] != 0;
     haveCoffee = map['haveCoffee'] != 0;
     haveAlcohol = map['haveAlcohol'] != 0;
     haveSmoke = map['haveSmoke'] != 0;
-    dailyActivityRemark = map['dailyActivityRemark'];
   }
 
   Map<String, dynamic> toMap() {
@@ -123,6 +123,7 @@ class DailyRecord {
 
       'medicineUsage': medicineUsage,
 
+      'dailyActivityRemark': dailyActivityRemark,
       'dailyStressScale': dailyStressScale,
       'haveMenstruation': haveMenstruation ? 1 : 0,
       'haveRestlessLegSyndrome': haveRestlessLegSyndrome ? 1 : 0,
@@ -132,11 +133,10 @@ class DailyRecord {
       'haveEnoughSleep': haveEnoughSleep ? 1 : 0,
       'haveEnoughWater': haveEnoughWater ? 1 : 0,
       'haveEnoughMeal': haveEnoughMeal ? 1 : 0,
-      'haveEnoughExercise': haveEnoughExercise ? 1 : 0,
+      'haveExercise': haveExercise ? 1 : 0,
       'haveCoffee': haveCoffee ? 1 : 0,
       'haveAlcohol': haveAlcohol ? 1 : 0,
-      'haveSmoke': haveSmoke ? 1 : 0,
-      'dailyActivityRemark': dailyActivityRemark
+      'haveSmoke': haveSmoke ? 1 : 0
     };
   }
 }

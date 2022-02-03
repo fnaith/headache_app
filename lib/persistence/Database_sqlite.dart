@@ -39,7 +39,7 @@ class Database_sqlite {
         haveEnoughSleep INTEGER NOT NULL,
         haveEnoughWater INTEGER NOT NULL,
         haveEnoughMeal INTEGER NOT NULL,
-        haveEnoughExercise INTEGER NOT NULL,
+        haveExercise INTEGER NOT NULL,
         haveCoffee INTEGER NOT NULL,
         haveAlcohol INTEGER NOT NULL,
         haveSmoke INTEGER NOT NULL,
