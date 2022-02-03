@@ -3,6 +3,7 @@ import 'package:headache_app/page/MedicineManagement.dart';
 import 'package:headache_app/page/DailyRecordEditor.dart';
 import 'package:headache_app/page/BPage.dart';
 import 'package:headache_app/page/BackupAndRestorePage.dart';
+import 'package:headache_app/page/AnalysisPage.dart';
 import 'package:headache_app/persistence/dailyRecord/DailyRecord.dart';
 import 'package:headache_app/persistence/dailyRecord/DailyRecordDb.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                   bool isThisMonthDay,
                   DateTime day,
                   ) {
-                final date = day.year * 10000 + day.month * 100 + day.day;
+                final date = DailyRecord.getDate(day);
                 return Center(
                   child: Text(
                     day.day.toString(),
@@ -116,14 +117,14 @@ class _HomePageState extends State<HomePage> {
                   child: const Text('藥物管理'),
                   onPressed: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => MedicineManagement()));
+                        context, MaterialPageRoute(builder: (context) => const MedicineManagement()));
                   },
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton(
                   child: const Text('統計分析'),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => BPage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (c) => const AnalysisPage()));
                   },
                 )
               ]
@@ -143,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                 ElevatedButton(
                   child: const Text('幫助訊息'),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => BPage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const BPage()));
                   },
                 )
               ]

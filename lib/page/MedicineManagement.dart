@@ -35,6 +35,7 @@ class _MedicineManagementState extends State<MedicineManagement> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('藥物管理'),
+        centerTitle: true
       ),
       body: Container(
         padding: const EdgeInsets.all(20),
@@ -88,6 +89,12 @@ class _MedicineManagementState extends State<MedicineManagement> {
                   );
                 }
               )
+            ),
+            ElevatedButton(
+              child: const Text('返回首頁'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
             )
           ]
         )

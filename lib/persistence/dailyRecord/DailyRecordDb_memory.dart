@@ -19,8 +19,16 @@ class DailyRecordDb {
 
   Future<List<DailyRecord>> findAll() async {
     final List<DailyRecord> dailyRecords = _records.values
-        .map((record) => DailyRecord.fromMap(record))
-        .toList();
+      .map((record) => DailyRecord.fromMap(record))
+      .toList();
+    return Future<List<DailyRecord>>.value(dailyRecords);
+  }
+
+  Future<List<DailyRecord>> findAllBetweenDate(int startDate, int endDate) async {
+    final List<DailyRecord> dailyRecords = _records.values
+      .map((record) => DailyRecord.fromMap(record))
+      .where((dailyRecord) => startDate <= dailyRecord.date && dailyRecord.date <= endDate)
+      .toList();
     return Future<List<DailyRecord>>.value(dailyRecords);
   }
 }

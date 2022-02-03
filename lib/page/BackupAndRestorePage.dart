@@ -24,6 +24,7 @@ class BackupAndRestorePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('備份還原'),
+        centerTitle: true
       ),
       body: _BackupAndRestorePage(onSave, onSaveDone),
     );

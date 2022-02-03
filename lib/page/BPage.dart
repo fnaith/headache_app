@@ -7,7 +7,8 @@ class BPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('我是 B 頁'),
+        title: const Text('我是 B 頁'),
+        centerTitle: true
       ),
       body: _BPage(),
     );
@@ -23,7 +24,7 @@ class _BPage extends StatelessWidget {
         onPressed: () {
           Navigator.pop(context);
         },
-      ),
+      )
     );
   }
 }

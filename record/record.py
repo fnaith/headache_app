@@ -5,10 +5,10 @@ import json
 def list_to_daily_record(id, column):
   daily_record = {}
   daily_record['date'] = id
-  daily_record['morningPainScale'] = int(int(0 if '' == column[0] else column[0]) * 10 / 3)
-  daily_record['afternoonPainScale'] = int(int(0 if '' == column[1] else column[1]) * 10 / 3)
-  daily_record['nightPainScale'] = int(int(0 if '' == column[2] else column[2]) * 10 / 3)
-  daily_record['sleepingPainScale'] = int(int(0 if '' == column[3] else column[3]) * 10 / 3)
+  daily_record['morningPainScale'] = int(int(0 if '' == column[0] else column[0]) * 11 / 3)
+  daily_record['afternoonPainScale'] = int(int(0 if '' == column[1] else column[1]) * 11 / 3)
+  daily_record['nightPainScale'] = int(int(0 if '' == column[2] else column[2]) * 11 / 3)
+  daily_record['sleepingPainScale'] = int(int(0 if '' == column[3] else column[3]) * 11 / 3)
   daily_record['disgusted'] = 0 if '' == column[4] else 1
   daily_record['vomited'] = 0 if '' == column[5] else 1
   daily_record['sensitiveToLight'] = 0 if '' == column[6] else 1

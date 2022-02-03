@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'page/HomePage.dart';
 
 void main() {
@@ -16,6 +17,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const HomePage(title: '頭痛醫療日記'),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate
+      ],
+      supportedLocales: const [
+        Locale('zh', 'TW')
+      ]
     );
   }
 }

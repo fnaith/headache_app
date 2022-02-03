@@ -6,15 +6,15 @@ class DailyRecordDb {
   Future<DailyRecord> save(DailyRecord dailyRecord) async {
     final db = await Database_sqlite.getDBConnect();
     await db.insert('dailyRecords', dailyRecord.toMap(),
-        conflictAlgorithm: sql.ConflictAlgorithm.replace);
+      conflictAlgorithm: sql.ConflictAlgorithm.replace);
     return Future<DailyRecord>.value(dailyRecord);
   }
 
   Future<DailyRecord?> findOneByDate(int date) async {
     final db = await Database_sqlite.getDBConnect();
     final dailyRecords = (await db.query('dailyRecords', where: "date = ?", whereArgs: [date]))
-        .map((record) => DailyRecord.fromMap(record))
-        .toList();
+      .map((record) => DailyRecord.fromMap(record))
+      .toList();
     if (dailyRecords.isEmpty) {
       return Future<DailyRecord?>.value(null);
     }
@@ -24,8 +24,16 @@ class DailyRecordDb {
   Future<List<DailyRecord>> findAll() async {
     final db = await Database_sqlite.getDBConnect();
     final dailyRecords = (await db.query('dailyRecords'))
-        .map((record) => DailyRecord.fromMap(record))
-        .toList();
+      .map((record) => DailyRecord.fromMap(record))
+      .toList();
+    return Future<List<DailyRecord>>.value(dailyRecords);
+  }
+
+  Future<List<DailyRecord>> findAllBetweenDate(int startDate, int endDate) async {
+    final db = await Database_sqlite.getDBConnect();
+    final dailyRecords = (await db.query('dailyRecords', where: "? <= date AND date <= ?", whereArgs: [startDate, endDate]))
+      .map((record) => DailyRecord.fromMap(record))
+      .toList();
     return Future<List<DailyRecord>>.value(dailyRecords);
   }
 }
