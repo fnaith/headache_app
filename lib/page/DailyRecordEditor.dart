@@ -488,6 +488,10 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                     _dailyRecordDb.save(_dailyRecord);
                     onSave(_dailyRecord.date);
                     onSaveDone();
+                    const snackBar = SnackBar(
+                      content: Text('儲存成功')
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 ),
                 ElevatedButton(

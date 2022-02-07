@@ -50,32 +50,52 @@ class _BackupAndRestorePage extends StatelessWidget {
           ElevatedButton(
             child: const Text('匯入檔案'),
             onPressed: () async {
-              await FilePicker.platform.clearTemporaryFiles();
-              final FilePickerResult? result = await FilePicker.platform.pickFiles(
-                type: FileType.custom,
-                allowedExtensions: ['txt'],
-                withData: true,
-                withReadStream: true
-              );
-              if (null != result) {
-                final PlatformFile file = result.files.first;
-                if (null != file.bytes) {
-                  final String json = utf8.decode(file.bytes!);
-                  final mapList = jsonDecode(json) as List<dynamic>;
-                  // log('>>>${(await _dailyRecordDb.findAll()).length}');
-                  for (var i = 0 ; i < mapList.length; ++i) {
-                    final dynamic map = mapList[i];
-                    final isNewDailyRecord = null == await _dailyRecordDb.findOneByDate(map['date']);
-                    if (isNewDailyRecord) {
-                      await _dailyRecordDb.save(DailyRecord.fromMap(map));
-                      onSave(map['date']);
+              try {
+                await FilePicker.platform.clearTemporaryFiles();
+                final FilePickerResult? result = await FilePicker.platform.pickFiles(
+                    type: FileType.custom,
+                    allowedExtensions: ['txt'],
+                    withData: true,
+                    withReadStream: true
+                );
+                if (null != result) {
+                  final PlatformFile file = result.files.first;
+                  if (null != file.bytes) {
+                    const snackBar1 = SnackBar(
+                        content: Text('開始匯入')
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar1);
+                    final String json = utf8.decode(file.bytes!);
+                    final mapList = jsonDecode(json) as List<dynamic>;
+                    // log('>>>${(await _dailyRecordDb.findAll()).length}');
+                    for (var i = 0 ; i < mapList.length; ++i) {
+                      final dynamic map = mapList[i];
+                      final isNewDailyRecord = null == await _dailyRecordDb.findOneByDate(map['date']);
+                      if (isNewDailyRecord) {
+                        await _dailyRecordDb.save(DailyRecord.fromMap(map));
+                        onSave(map['date']);
+                      }
                     }
+                    onSaveDone();
+                    // log('>>>${(await _dailyRecordDb.findAll()).length}');
+                    const snackBar2 = SnackBar(
+                        content: Text('匯入成功')
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar2);
+                  } else {
+                    const snackBar = SnackBar(
+                        content: Text('讀取失敗')
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
-                  onSaveDone();
-                  // log('>>>${(await _dailyRecordDb.findAll()).length}');
                 }
+              } catch (error) {
+                SnackBar snackBar = SnackBar(
+                    content: Text('匯入失敗 : ${error.toString()}')
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
               }
-            },
+            }
           ),
           ElevatedButton(
             child: const Text('匯出備份'),

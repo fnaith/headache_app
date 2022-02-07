@@ -35,6 +35,10 @@ class _HelpPage extends StatelessWidget {
             child: const Text('複製信箱'),
             onPressed: () {
               Clipboard.setData(ClipboardData(text: email));
+              const snackBar = SnackBar(
+                  content: Text('複製成功')
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             },
           ),
           ElevatedButton(

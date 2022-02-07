@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
               markedDateShowIcon: true,
               onDayPressed: (date, event) {
                 pressedDay = date;
-                print(event);
+                // print(event);
                 Navigator.push(context, MaterialPageRoute(builder: (context) =>
                     DailyRecordEditor(dateTime: pressedDay!, onSave: (date) { _existDates.add(date); },
                         onSaveDone: () { setState(() {}); })));

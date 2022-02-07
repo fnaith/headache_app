@@ -66,6 +66,10 @@ class _MedicineManagementState extends State<MedicineManagement> {
                   insertData();
                   FocusScope.of(context).unfocus();
                 });
+                const snackBar = SnackBar(
+                    content: Text('新增成功')
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
               }
             ),
             Flexible(
@@ -82,7 +86,7 @@ class _MedicineManagementState extends State<MedicineManagement> {
                         trailing: GestureDetector(
                           child: const Icon(Icons.delete, color: Colors.grey),
                           onTap: () {
-                            deleteData(medicines[position].id!);
+                            showDeleteAlert(context, medicines[position].id!, medicines[position].name);
                           }
                         )
                       )
@@ -114,12 +118,40 @@ class _MedicineManagementState extends State<MedicineManagement> {
   void getAllData() async {
     final medicines = await medicineDb.findAllNotDeletedOrderByNameAscIdAsc();
     setState(() {
+      medicines.sort((a, b) => a.id!.compareTo(b.id!));
       this.medicines = medicines;
     });
   }
 
-  void deleteData(int itemId) async {
+  Future<void> deleteData(int itemId) async {
     await medicineDb.softDeleteById(itemId);
     refreshDataList();
+  }
+
+  Future<void> showDeleteAlert(BuildContext context, int itemId, String itemName) async {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text('確定要刪除 $itemName 嗎？'),
+        content: const Text('AlertDialog description'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, '取消'),
+            child: const Text('取消')
+          ),
+          TextButton(
+            onPressed: () async {
+              await deleteData(itemId);
+              Navigator.pop(context, '確定刪除');
+              const snackBar = SnackBar(
+                  content: Text('刪除成功')
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            },
+            child: const Text('確定刪除')
+          )
+        ]
+      )
+    );
   }
 }
