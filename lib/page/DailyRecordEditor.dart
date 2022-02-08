@@ -298,7 +298,7 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                 ]
             ),
             ExpansionTile(
-                title: const Text('用藥紀錄'),
+                title: const Text('用藥記錄'),
                 children: <Widget>[
                   MedicineUsageEditor(
                       value: _dailyRecord.medicineUsage,
