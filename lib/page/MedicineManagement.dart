@@ -133,7 +133,7 @@ class _MedicineManagementState extends State<MedicineManagement> {
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: Text('確定要刪除 $itemName 嗎？'),
-        content: const Text('AlertDialog description'),
+        content: const Text('刪除不會影響舊的記錄，但不再顯示於用藥記錄'),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, '取消'),
