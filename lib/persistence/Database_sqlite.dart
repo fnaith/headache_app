@@ -65,7 +65,7 @@ class Database_sqlite {
 
   static Future<sql.Database> initDatabase() async {
     return sql.openDatabase(
-      path.join(await sql.getDatabasesPath(), 'headache_app.db'),
+      path.join(await sql.getDatabasesPath(), 'headache_app_1.db'),
       version: 1,
       onCreate: (sql.Database database, int version) async {
         await createTable(database);
