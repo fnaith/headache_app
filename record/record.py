@@ -2,13 +2,23 @@ import csv
 import math
 import json
 
+def str_to_pain_scale(s):
+  i = 0 if '' == s else int(s)
+  if i <= 0:
+    return 0
+  if i <= 1:
+    return 4
+  if i <= 2:
+    return 7
+  return 10
+
 def list_to_daily_record(id, column):
   daily_record = {}
   daily_record['date'] = id
-  daily_record['morningPainScale'] = int(int(0 if '' == column[0] else column[0]) * 11 / 3)
-  daily_record['afternoonPainScale'] = int(int(0 if '' == column[1] else column[1]) * 11 / 3)
-  daily_record['nightPainScale'] = int(int(0 if '' == column[2] else column[2]) * 11 / 3)
-  daily_record['sleepingPainScale'] = int(int(0 if '' == column[3] else column[3]) * 11 / 3)
+  daily_record['morningPainScale'] = str_to_pain_scale(column[0])
+  daily_record['afternoonPainScale'] = str_to_pain_scale(column[1])
+  daily_record['nightPainScale'] = str_to_pain_scale(column[2])
+  daily_record['sleepingPainScale'] = str_to_pain_scale(column[3])
   daily_record['disgusted'] = 0 if '' == column[4] else 1
   daily_record['vomited'] = 0 if '' == column[5] else 1
   daily_record['sensitiveToLight'] = 0 if '' == column[6] else 1

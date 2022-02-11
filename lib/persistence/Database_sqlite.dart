@@ -6,7 +6,7 @@ class Database_sqlite {
 
   static Future<void> createTable(sql.Database database) async {
     await database.execute("""CREATE TABLE dailyRecords(
-        date INTEGER NOT NULL,
+        date INTEGER PRIMARY KEY NOT NULL,
         morningPainScale INTEGER NOT NULL,
         afternoonPainScale INTEGER NOT NULL,
         nightPainScale INTEGER NOT NULL,

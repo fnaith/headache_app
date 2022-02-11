@@ -14,11 +14,26 @@ class PainScaleSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    Color sliderColor = theme.colorScheme.primary;
+    switch (value) {
+      case 0: break;
+      case 1: case 2: case 3: case 4:
+        sliderColor = Colors.yellow;
+        break;
+      case 5: case 6: case 7: case 8: case 9:
+        sliderColor = Colors.orange;
+        break;
+      default:
+        sliderColor = Colors.red;
+        break;
+    }
     return Row(
       children: <Widget>[
         const Text('     '),
         Text(label),
         Slider(
+          activeColor: sliderColor,//theme.colorScheme.primary,
           value: value.toDouble(),
           max: 10,
           divisions: 10,

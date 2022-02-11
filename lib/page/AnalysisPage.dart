@@ -71,9 +71,9 @@ class _AnalysisPage extends StatelessWidget {
                       ++painTimings[3];
                       painScale = max(painScale, record.sleepingPainScale);
                     }
-                    if (7 < painScale) {
+                    if (9 < painScale) {
                       painScale = 3;
-                    } else if (3 < painScale) {
+                    } else if (4 < painScale) {
                       painScale = 2;
                     } else if (0 < painScale) {
                       painScale = 1;
