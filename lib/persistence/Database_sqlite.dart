@@ -1,11 +1,12 @@
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:path/path.dart' as path;
+import 'package:sqflite/sqflite.dart';
 
 class Database_sqlite {
   static sql.Database? database;
 
-  static Future<void> createTable(sql.Database database) async {
-    await database.execute("""CREATE TABLE dailyRecords(
+  static Future<void> createTableV1(sql.Database database) async {
+    await database.execute('''CREATE TABLE dailyRecords(
         date INTEGER PRIMARY KEY NOT NULL,
         morningPainScale INTEGER NOT NULL,
         afternoonPainScale INTEGER NOT NULL,
@@ -45,31 +46,50 @@ class Database_sqlite {
         haveSmoke INTEGER NOT NULL,
         dailyActivityRemark TEXT NOT NULL
       );
-      """);
-    await database.execute("""CREATE TABLE medicines(
+      ''');
+    await database.execute('''CREATE TABLE medicines(
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         name TEXT NOT NULL,
         isPainkiller INTEGER NOT NULL,
         deleted INTEGER NOT NULL
       );
-      """);
-    await database.execute("""INSERT INTO medicines(
+      ''');
+    await database.execute('''INSERT INTO medicines(
         id, name, isPainkiller, deleted
       ) VALUES
       (0, '舒腦 Suzin 5 mg', 0, 0),
       (1, '英明格 Imigran 50 mg', 1, 0),
       (2, '中藥', 0, 0),
       (3, '心康樂 Cardolol 40 mg', 0, 0);
-      """);
+      ''');
+  }
+
+  static updateTableV2(Batch batch) {
+    batch.execute('''ALTER TABLE dailyRecords
+      ADD COLUMN haveSeeADoctor INTEGER NOT NULL DEFAULT 0;
+      ''');
   }
 
   static Future<sql.Database> initDatabase() async {
     return sql.openDatabase(
       path.join(await sql.getDatabasesPath(), 'headache_app_1.db'),
-      version: 1,
+      version: 2,
       onCreate: (sql.Database database, int version) async {
-        await createTable(database);
+        switch (version) {
+          case 1:
+            await createTableV1(database);
+            break;
+        }
       },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        var batch = db.batch();
+        switch (oldVersion) {
+          case 1:
+            await updateTableV2(batch);
+            break;
+        }
+        await batch.commit();
+      }
     );
   }
 

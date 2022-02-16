@@ -416,6 +416,15 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                   ]
                 ),
                 LabeledCheckbox(
+                    label: '是否就診？',
+                    value: _dailyRecord.haveSeeADoctor,
+                    onChanged: (bool newValue) {
+                      setState(() {
+                        _dailyRecord.haveSeeADoctor = newValue;
+                      });
+                    }
+                ),
+                LabeledCheckbox(
                   label: '是否充分睡眠？',
                   value: _dailyRecord.haveEnoughSleep,
                   onChanged: (bool newValue) {

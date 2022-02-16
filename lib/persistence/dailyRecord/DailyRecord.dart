@@ -41,6 +41,7 @@ class DailyRecord {
   String bodyTemperature = "";
   String diastolicBloodPressure = "";
   String systolicBloodPressure = "";
+  bool haveSeeADoctor = false;
   bool haveEnoughSleep = true;
   bool haveEnoughWater = true;
   bool haveEnoughMeal = true;
@@ -85,6 +86,9 @@ class DailyRecord {
     bodyTemperature = map['bodyTemperature'];
     diastolicBloodPressure = map['diastolicBloodPressure'];
     systolicBloodPressure = map['systolicBloodPressure'];
+    if (null != map['haveSeeADoctor']) {
+      haveSeeADoctor = map['haveSeeADoctor'] != 0;
+    }
     haveEnoughSleep = map['haveEnoughSleep'] != 0;
     haveEnoughWater = map['haveEnoughWater'] != 0;
     haveEnoughMeal = map['haveEnoughMeal'] != 0;
@@ -130,6 +134,7 @@ class DailyRecord {
       'bodyTemperature': bodyTemperature,
       'diastolicBloodPressure': diastolicBloodPressure,
       'systolicBloodPressure': systolicBloodPressure,
+      'haveSeeADoctor': haveSeeADoctor ? 1 : 0,
       'haveEnoughSleep': haveEnoughSleep ? 1 : 0,
       'haveEnoughWater': haveEnoughWater ? 1 : 0,
       'haveEnoughMeal': haveEnoughMeal ? 1 : 0,
