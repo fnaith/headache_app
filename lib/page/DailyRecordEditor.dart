@@ -105,7 +105,7 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                         const Text('當日頭痛幾小時？'),
                         DropdownButton<int>(
                           value: _dailyRecord.headacheHours,
-                          items: List.generate(24, (index) => index, growable: true).map((int value) {
+                          items: List.generate(24, (index) => index, growable: false).map((int value) {
                             return DropdownMenuItem<int>(
                               value: value,
                               child: Text(value.toString().padLeft(2, '0')),
@@ -119,16 +119,32 @@ class _DailyRecordEditorState extends State<DailyRecordEditor> {
                         ),
                         const Text('小時'),
                         DropdownButton<int>(
-                          value: _dailyRecord.headacheMinutes,
-                          items: List.generate(13, (index) => index * 5, growable: true).map((int value) {
+                          value: (_dailyRecord.headacheMinutes / 10).floor(),
+                          items: List.generate(6, (index) => index, growable: false).map((int value) {
                             return DropdownMenuItem<int>(
                               value: value,
-                              child: Text(value.toString().padLeft(2, '0')),
+                              child: Text(value.toString()),
                             );
                           }).toList(),
                           onChanged: (int? newValue) {
                             setState(() {
-                              _dailyRecord.headacheMinutes = newValue ?? _dailyRecord.headacheMinutes;
+                              final int value = newValue ?? 0;
+                              _dailyRecord.headacheMinutes = value * 10 + _dailyRecord.headacheMinutes % 10;
+                            });
+                          },
+                        ),
+                        DropdownButton<int>(
+                          value: _dailyRecord.headacheMinutes % 10,
+                          items: List.generate(10, (index) => index, growable: false).map((int value) {
+                            return DropdownMenuItem<int>(
+                              value: value,
+                              child: Text(value.toString()),
+                            );
+                          }).toList(),
+                          onChanged: (int? newValue) {
+                            setState(() {
+                              final int value = newValue ?? 0;
+                              _dailyRecord.headacheMinutes = (_dailyRecord.headacheMinutes / 10).floor() * 10 + value;
                             });
                           },
                         ),
