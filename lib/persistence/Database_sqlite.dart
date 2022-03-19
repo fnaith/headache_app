@@ -44,7 +44,8 @@ class Database_sqlite {
         haveCoffee INTEGER NOT NULL,
         haveAlcohol INTEGER NOT NULL,
         haveSmoke INTEGER NOT NULL,
-        dailyActivityRemark TEXT NOT NULL
+        dailyActivityRemark TEXT NOT NULL,
+        haveSeeADoctor INTEGER NOT NULL DEFAULT 0
       );
       ''');
     await database.execute('''CREATE TABLE medicines(
@@ -64,16 +65,10 @@ class Database_sqlite {
       ''');
   }
 
-  static updateTableV2(Batch batch) {
-    batch.execute('''ALTER TABLE dailyRecords
-      ADD COLUMN haveSeeADoctor INTEGER NOT NULL DEFAULT 0;
-      ''');
-  }
-
   static Future<sql.Database> initDatabase() async {
     return sql.openDatabase(
-      path.join(await sql.getDatabasesPath(), 'headache_app_1.db'),
-      version: 2,
+      path.join(await sql.getDatabasesPath(), 'headache_app_2.db'),
+      version: 1,
       onCreate: (sql.Database database, int version) async {
         switch (version) {
           case 1:
@@ -83,11 +78,6 @@ class Database_sqlite {
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         var batch = db.batch();
-        switch (oldVersion) {
-          case 1:
-            await updateTableV2(batch);
-            break;
-        }
         await batch.commit();
       }
     );

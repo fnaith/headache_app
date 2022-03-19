@@ -19,8 +19,8 @@ class HelpPage extends StatelessWidget {
 }
 
 class _HelpPage extends StatelessWidget {
-  final String version = 'Beta 1.0.0';
-  final String releaseDate = '2022/02/03';
+  final String version = 'Beta 1.0.2';
+  final String releaseDate = '2022/03/19';
   final String email = 'weichih.fr.lai@gmail.com';
 
   @override
