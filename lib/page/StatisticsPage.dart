@@ -68,7 +68,7 @@ class _StatisticsPage extends StatelessWidget {
             Align(alignment: Alignment.centerLeft, child: Text('小痛 : ${painScales[1]} 天')),
             Align(alignment: Alignment.centerLeft, child: Text('大+中+小痛 : ${painScales[3] + painScales[2] + painScales[1]} 天')),
             Align(alignment: Alignment.centerLeft, child: Text('大+中痛 : ${painScales[3] + painScales[2]} 天')),
-            Align(alignment: Alignment.centerLeft, child: Text('大痛 : ${painScales[0]} 天')),
+            Align(alignment: Alignment.centerLeft, child: Text('不痛 : ${painScales[0]} 天')),
             Align(alignment: Alignment.centerLeft, child: Text('受到月經影響的頭痛 : $mc 天')),
             Align(alignment: Alignment.centerLeft, child: Text('不寧腿 : $rls 天', textAlign: TextAlign.left)),
             ElevatedButton(
